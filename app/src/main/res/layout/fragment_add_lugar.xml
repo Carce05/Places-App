@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.lugar.AddLugarFragment" >
+    tools:context=".ui.crypto.AddCryptoFragment" >
 
     <ScrollView
         android:layout_width="409dp"
@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/msg_correo"
+                android:hint="@string/msg_red"
                 android:inputType="textEmailAddress" />
 
             <EditText
@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/msg_telefono"
+                android:hint="@string/msg_cantidad"
                 android:inputType="phone" />
 
             <EditText
