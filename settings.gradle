@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "lugares"
+rootProject.name = "crypto"
 include ':app'
