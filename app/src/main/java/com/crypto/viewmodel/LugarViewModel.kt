@@ -1,8 +1,7 @@
 package com.crypto.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+<<<<<<< HEAD:app/src/main/java/com/crypto/viewmodel/LugarViewModel.kt
 import androidx.lifecycle.viewModelScope
 import com.crypto.data.CryptoDatabase
 import com.crypto.model.Crypto
@@ -39,3 +38,15 @@ class LugarViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 }
+=======
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+
+class LugarViewModel : ViewModel() {
+
+    private val _text = MutableLiveData<String>().apply {
+        value = "This is home Fragment"
+    }
+    val text: LiveData<String> = _text
+}
+>>>>>>> parent of 4c90b23 (clase03 Finalizada):app/src/main/java/com/lugares/viewmodel/LugarViewModel.kt
