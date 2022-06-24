@@ -26,6 +26,7 @@
     <string name="msg_cantidad">Cantidad (1-99999999)</string>
     <string name="msg_web">Sitio Web</string>
     <string name="bt_agregar">Agregar</string>
+<<<<<<< Updated upstream
     <string name="cryptoAdded">Lugar agregado</string>
     <string name="noData">Faltan datos</string>
 =======
@@ -34,5 +35,11 @@
 >>>>>>> parent of 4c90b23 (clase03 Finalizada)
 =======
 >>>>>>> parent of 4c90b23 (clase03 Finalizada)
+=======
+    <string name="bt_actualizar">Actualizar</string>
+    <string name="lugarAdded">Lugar agregado</string>
+    <string name="noData">Faltan datos</string>
+    <string name="todo">TODO</string>
+>>>>>>> Stashed changes
 
 </resources>

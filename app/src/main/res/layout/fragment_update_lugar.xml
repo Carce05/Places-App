@@ -4,12 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-<<<<<<< Updated upstream
-    android:orientation="vertical"
-    tools:context=".ui.crypto.AddCryptoFragment" >
-=======
-    tools:context=".ui.lugar.AddLugarFragment" >
->>>>>>> Stashed changes
+    tools:context=".ui.lugar.UpdateLugarFragment" >
 
     <ScrollView
         android:layout_width="409dp"
@@ -39,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/msg_red"
+                android:hint="@string/msg_correo"
                 android:inputType="textEmailAddress" />
 
             <EditText
@@ -47,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/msg_cantidad"
+                android:hint="@string/msg_telefono"
                 android:inputType="phone" />
 
             <EditText
@@ -59,10 +54,10 @@
                 android:inputType="textPersonName" />
 
             <Button
-                android:id="@+id/btAdd"
+                android:id="@+id/btActualizar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/bt_agregar" />
+                android:text="@string/bt_actualizar" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
