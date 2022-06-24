@@ -9,6 +9,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         android:id="@+id/nav_crypto"
         android:name="com.crypto.ui.crypto.CryptoFragment"
         android:label="@string/menu_crypto"
@@ -22,12 +23,17 @@
 >>>>>>> parent of 4c90b23 (clase03 Finalizada)
 =======
 >>>>>>> parent of 4c90b23 (clase03 Finalizada)
+=======
+>>>>>>> parent of 4c90b23 (clase03 Finalizada)
         android:id="@+id/nav_lugar"
         android:name="com.lugares.ui.lugar.LugarFragment"
         android:label="@string/menu_lugar"
         tools:layout="@layout/fragment_lugar" />
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 4c90b23 (clase03 Finalizada)
+=======
 >>>>>>> parent of 4c90b23 (clase03 Finalizada)
 =======
 >>>>>>> parent of 4c90b23 (clase03 Finalizada)
@@ -48,6 +54,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <fragment
         android:id="@+id/addLugarFragment"
         android:name="com.crypto.ui.crypto.AddCryptoFragment"
@@ -57,6 +64,8 @@
             android:id="@+id/action_addLugarFragment_to_nav_lugar"
             app:destination="@id/nav_crypto" />
     </fragment>
+=======
+>>>>>>> parent of 4c90b23 (clase03 Finalizada)
 =======
 >>>>>>> parent of 4c90b23 (clase03 Finalizada)
 =======
