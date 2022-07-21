@@ -1,7 +1,10 @@
 package com.lugares.ui.lugar
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.os.TestLooperManager
@@ -15,8 +18,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
@@ -34,7 +40,7 @@ class AddLugarFragment : Fragment() {
     private var _binding: FragmentAddLugarBinding? = null
     private val binding get() = _binding!!
 
-    private  lateinit var  audioUtiles: AudioUtiles
+    private lateinit var audioUtiles: AudioUtiles
     private lateinit var imagenUtiles: ImagenUtiles
     private lateinit var tomarFotoActivity: ActivityResultLauncher<Intent>
 
@@ -43,7 +49,7 @@ class AddLugarFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         lugarViewModel = ViewModelProvider(this)[LugarViewModel::class.java]
-        _binding = FragmentAddLugarBinding.inflate(inflater,container,false)
+        _binding = FragmentAddLugarBinding.inflate(inflater, container, false)
 
         //Se agrega la funcion para agregar un lugar
         binding.btAdd.setOnClickListener {
@@ -55,90 +61,160 @@ class AddLugarFragment : Fragment() {
         }
 
 
-        audioUtiles = AudioUtiles(requireActivity(),
+        audioUtiles = AudioUtiles(
+            requireActivity(),
             requireContext(),
             binding.btAccion,
             binding.btPlay,
             binding.btDelete,
             getString(R.string.msg_graba_audio),
-            getString(R.string.msg_detener_audio))
+            getString(R.string.msg_detener_audio)
+        )
 
         tomarFotoActivity = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()){
-            result ->
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 imagenUtiles.actualizaFoto()
             }
         }
 
-        imagenUtiles= ImagenUtiles(
+        imagenUtiles = ImagenUtiles(
             requireContext(),
             binding.btPhoto,
             binding.btRotaL,
             binding.btRotaR,
             binding.imagen,
-            tomarFotoActivity)
+            tomarFotoActivity
+        )
+        ubicaGPS()
 
         return binding.root
     }
 
-    private fun subeAudio(){
-        val audioFile = audioUtiles.audioFile
-        if (audioFile.exists() && audioFile.isFile && audioFile.canRead()){
-            val ruta = Uri.fromFile(audioFile)
-            val rutaNube ="lugareApp/${Firebase.auth.currentUser?.email}/audios/${audioFile.name}"
-            val referencia: StorageReference = Firebase.storage.reference.child(rutaNube)
-            referencia.putFile(ruta)
-                .addOnSuccessListener {
-                    referencia.downloadUrl
-                        .addOnSuccessListener {
-                            val rutaAudio = it.toString()
-                            subeImagen(rutaAudio)
-                        }
+    private fun ubicaGPS() {
+        val ubicacion: FusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(requireContext())
+
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+            != PackageManager.PERMISSION_GRANTED
+            &&
+            ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+            != PackageManager.PERMISSION_GRANTED
+        ) {  //Si no tengo los permisos... entonces pido los permisos
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ), 105
+            )
+        } else {  //Tengo los permisos entonces recupero las coordenadas...
+            ubicacion.lastLocation
+                .addOnSuccessListener { location: Location? ->
+                    if (location != null) { //Se pudo leer las coordenadas gps...
+                        binding.tvLongitud.text = "${location.longitude}"
+                        binding.tvLatitud.text = "${location.latitude}"
+                        binding.tvAltura.text = "${location.altitude}"
+                    } else {  //No se logró obtener coordenadas reales...
+                        binding.tvLongitud.text = "0.00"
+                        binding.tvLatitud.text = "0.00"
+                        binding.tvAltura.text = "0.00"
+                    }
                 }
-                .addOnFailureListener {
-                    subeImagen("")
-                }
-        }else{
+        }
+    }
+
+    private fun subeAudio() {
+        if (audioUtiles.getAudioGrabado()) {
+            val audioFile = audioUtiles.audioFile
+            if (audioFile.exists() && audioFile.isFile && audioFile.canRead()) {
+                val ruta = Uri.fromFile(audioFile)
+                val rutaNube =
+                    "lugareApp/${Firebase.auth.currentUser?.email}/audios/${audioFile.name}"
+                val referencia: StorageReference = Firebase.storage.reference.child(rutaNube)
+                referencia.putFile(ruta)
+                    .addOnSuccessListener {
+                        referencia.downloadUrl
+                            .addOnSuccessListener {
+                                val rutaAudio = it.toString()
+                                subeImagen(rutaAudio)
+                            }
+                    }
+                    .addOnFailureListener {
+                        subeImagen("")
+                    }
+            } else {
+                subeImagen("")
+            }
+        } else {
             subeImagen("")
         }
-    }private fun subeImagen(rutaAudio: String){
+    }
+
+    private fun subeImagen(rutaAudio: String) {
         binding.msgMensaje.text = getString(R.string.msg_subiendo_imagen)
+        if (imagenUtiles.getFotoTomada()) {
+            val imagenFile = imagenUtiles.imagenFile
+            if (imagenFile.exists() && imagenFile.isFile && imagenFile.canRead()) {
+                val ruta = Uri.fromFile(imagenFile)
+                val rutaNube =
+                    "lugareApp/${Firebase.auth.currentUser?.email}/imagenes/${imagenFile.name}"
+                val referencia: StorageReference = Firebase.storage.reference.child(rutaNube)
+                referencia.putFile(ruta)
+                    .addOnSuccessListener {
+                        referencia.downloadUrl
+                            .addOnSuccessListener {
+                                val rutaImagen = it.toString()
+                                addLugar(rutaAudio, rutaImagen)
+                            }
+                    }
+                    .addOnFailureListener {
+                        addLugar(rutaAudio, "")
 
-        val imagenFile = imagenUtiles.imagenFile
-        if (imagenFile.exists() && imagenFile.isFile && imagenFile.canRead()){
-            val ruta = Uri.fromFile(imagenFile)
-            val rutaNube ="lugareApp/${Firebase.auth.currentUser?.email}/imagenes/${imagenFile.name}"
-            val referencia: StorageReference = Firebase.storage.reference.child(rutaNube)
-            referencia.putFile(ruta)
-                .addOnSuccessListener {
-                    referencia.downloadUrl
-                        .addOnSuccessListener {
-                            val rutaImagen = it.toString()
-                            addLugar(rutaAudio, rutaImagen)
-                        }
-                }
-                .addOnFailureListener{
-                    addLugar(rutaAudio,"")
-
-                }
-        }else{
-            addLugar(rutaAudio,"")
+                    }
+            } else {
+                addLugar(rutaAudio, "")
+            }
+        } else {
+            addLugar(rutaAudio, "")
         }
     }
 
     private fun addLugar(rutaAudio: String, rutaImagen: String) {
-        val nombre=binding.etNombre.text.toString()
-        val correo=binding.etCorreo.text.toString()
-        val telefono=binding.etTelefono.text.toString()
-        val web=binding.etWeb.text.toString()
+        val nombre = binding.etNombre.text.toString()
+        val correo = binding.etCorreo.text.toString()
+        val telefono = binding.etTelefono.text.toString()
+        val web = binding.etWeb.text.toString()
+        val latitud = binding.tvLatitud.text.toString().toDouble()
+        val longitud = binding.tvLongitud.text.toString().toDouble()
+        val altura = binding.tvAltura.text.toString().toDouble()
 
-        if (nombre.isNotEmpty()){
-            val lugar = Lugar("", nombre, correo, telefono, web, 0.0, 0.0, 0.0, rutaAudio, rutaImagen)
+
+        if (nombre.isNotEmpty()) {
+            val lugar = Lugar(
+                "",
+                nombre,
+                correo,
+                telefono,
+                web,
+                latitud,
+                longitud,
+                altura,
+                rutaAudio,
+                rutaImagen
+            )
             lugarViewModel.saveLugar(lugar)
-            Toast.makeText(requireContext(), getString(R.string.lugarAdded), Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.lugarAdded), Toast.LENGTH_SHORT)
+                .show()
             findNavController().navigate(R.id.action_addLugarFragment_to_nav_lugar)
-        }else{
+        } else {
             Toast.makeText(requireContext(), getString(R.string.noData), Toast.LENGTH_SHORT).show()
 
         }
