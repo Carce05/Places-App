@@ -78,4 +78,7 @@ dependencies {
     //google auth
     implementation 'com.google.android.gms:play-services-auth:20.2.0'
 
+    //para generar mapa
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+
 }
