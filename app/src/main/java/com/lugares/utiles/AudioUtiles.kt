@@ -91,11 +91,13 @@ class AudioUtiles(
         btDelete.isEnabled = true
         mediaRecorder?.stop()
         mediaRecorder?.release()
-        audioGrabado=true
-        Toast.makeText(contexto,msgDetieneNotaAudio,Toast.LENGTH_SHORT).show()
-        btAccion.setImageResource(R.drawable.ic_mic)
-    }
 
+
+        audioGrabado=true
+
+        audioGrabado=true
+
+        Toast.makeText(contexto,msgDetieneNotaAudio,Toast.LENGTH_SHORT).show()
     private fun playNota() {
         try {
             if (audioFile.exists() && audioFile.canRead()) {
@@ -121,9 +123,11 @@ class AudioUtiles(
         }
     }
 
+
     fun getAudioGrabado():Boolean {
         return audioGrabado
     }
+
 }
 
 
