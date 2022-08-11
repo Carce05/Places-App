@@ -33,6 +33,7 @@ class AudioUtiles(
         btDelete.isEnabled = false
     }
 
+
     //Para saber si se grab[o audio
     private var audioGrabado:Boolean=false
 
@@ -91,7 +92,9 @@ class AudioUtiles(
         btDelete.isEnabled = true
         mediaRecorder?.stop()
         mediaRecorder?.release()
+
         audioGrabado=true
+
         Toast.makeText(contexto,msgDetieneNotaAudio,Toast.LENGTH_SHORT).show()
         btAccion.setImageResource(R.drawable.ic_mic)
     }
@@ -121,9 +124,11 @@ class AudioUtiles(
         }
     }
 
+
     fun getAudioGrabado():Boolean {
         return audioGrabado
     }
+
 }
 
 

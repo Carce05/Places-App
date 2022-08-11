@@ -59,6 +59,7 @@ class ImagenUtiles (
     fun actualizaFoto() {
         imagen.setImageBitmap(
             BitmapFactory.decodeFile(imagenFile.absolutePath))
+
         fotoTomada = true
     }
 
@@ -67,6 +68,7 @@ class ImagenUtiles (
     private var fotoTomada:Boolean=false
     fun getFotoTomada():Boolean {
         return fotoTomada
+
     }
 }
 
