@@ -37,6 +37,7 @@
             </intent-filter>
         </activity>
 
+        
         <!-- Esto se requiere para buscar las imagenes capturadas de la cámara -->
         <!-- ojo el archivo llamado file_paths en la carpeta xml -->
         <provider
