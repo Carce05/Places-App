@@ -96,6 +96,7 @@ class AddLugarFragment : Fragment() {
         val ubicacion: FusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(requireContext())
 
+
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_COARSE_LOCATION
@@ -213,6 +214,11 @@ class AddLugarFragment : Fragment() {
             lugarViewModel.saveLugar(lugar)
             Toast.makeText(requireContext(), getString(R.string.lugarAdded), Toast.LENGTH_SHORT)
                 .show()
+
+        if (nombre.isNotEmpty()){
+            val lugar = Lugar("", nombre, correo, telefono, web, 0.0, 0.0, 0.0, "", "")
+            lugarViewModel.saveLugar(lugar)
+            Toast.makeText(requireContext(), getString(R.string.lugarAdded), Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_addLugarFragment_to_nav_lugar)
         } else {
             Toast.makeText(requireContext(), getString(R.string.noData), Toast.LENGTH_SHORT).show()
