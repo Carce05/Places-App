@@ -1,10 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Lugares</string>
-    <string name="default_web_client_id" translatable="false">401579333384-slqkdn3a3kb1ngikth3tm9l9886n46so.apps.googleusercontent.com</string>
-    <string name="tv_correo">Correo</string>
-    <string name="tv_clave">Contraseña</string>
-    <string name="msg_fallo_registro">Fallo el registro</string>
-    <string name="msg_fallo_login">Error autenticando usuario</string>
+    <string name="tv_correo">Email</string>
+    <string name="tv_clave">Password</string>
+    <string name="tv_correo">Email</string>
+    <string name="tv_clave">Password</string>
+    <string name="msg_fallo_registro">User error</string>
+    <string name="msg_fallo_login">Authentication error</string>
     <string name="title_activity_principal">Principal</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -19,7 +20,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="msg_nombre">Nombre del lugar</string>
+    <string name="msg_nombre">Place name</string>
     <string name="msg_correo">Correo (abc@abc.com)</string>
     <string name="msg_telefono">Teléfono (9999–99999)</string>
     <string name="msg_web">Sitio Web</string>
@@ -64,5 +65,6 @@
     <string name="tv_longitud1">Longitud</string>
     <string name="tv_altura1">Altura</string>
     <string name="todo">por definr</string>
+
 
 </resources>

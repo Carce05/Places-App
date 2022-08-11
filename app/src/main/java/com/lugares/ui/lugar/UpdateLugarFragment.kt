@@ -18,6 +18,9 @@ import com.lugares.model.Lugar
 import com.lugares.viewmodel.LugarViewModel
 import java.nio.file.Files.delete
 import android.Manifest
+import android.media.AsyncPlayer
+import android.media.MediaPlayer
+import com.bumptech.glide.Glide
 
 class UpdateLugarFragment : Fragment() {
     private val args by navArgs<UpdateLugarFragmentArgs>()
@@ -26,6 +29,8 @@ class UpdateLugarFragment : Fragment() {
 
     private var _binding: FragmentUpdateLugarBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var mediaPlayer: MediaPlayer
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,6 +56,24 @@ class UpdateLugarFragment : Fragment() {
         binding.btPhone.setOnClickListener({llamarLugar()})
         //binding.btWhatsapp.setOnClickListener({enviarWhatsApp()})
         binding.btWeb.setOnClickListener({verWeb()})
+        if(args.lugar.rutaAudio?.isNotEmpty()==true){
+            mediaPlayer = MediaPlayer()
+            mediaPlayer.setDataSource(args.lugar.rutaAudio)
+            mediaPlayer.prepare()
+            binding.btPlay.isEnabled=true
+            binding.btPlay.setOnClickListener{mediaPlayer.start()}
+
+        }else{
+            binding.btPlay.isEnabled=false
+        }
+
+        if(args.lugar.rutaAudio?.isNotEmpty()==true){
+            Glide.with(requireContext())
+                .load(args.lugar.rutaImagen)
+                .fitCenter()
+                .into(binding.imagen)
+
+        }
         //binding.btLocation.setOnClickListener({verMapa()})
 
         //Se indica que en esta pantalla se agrega opcion de menu

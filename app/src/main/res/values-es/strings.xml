@@ -1,6 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Lugares</string>
-    <string name="default_web_client_id" translatable="false">401579333384-slqkdn3a3kb1ngikth3tm9l9886n46so.apps.googleusercontent.com</string>
+    <string name="tv_correo">Correo</string>
+
     <string name="tv_correo">Correo</string>
     <string name="tv_clave">Contraseña</string>
     <string name="msg_fallo_registro">Fallo el registro</string>

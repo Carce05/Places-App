@@ -32,6 +32,11 @@ class AudioUtiles(
         btPlay.isEnabled = false
         btDelete.isEnabled = false
     }
+
+    //Para saber si se grab[o audio
+    private var audioGrabado:Boolean=false
+
+
     private var mediaRecorder: MediaRecorder? = null
     private var grabando: Boolean = false
     var audioFile: File = File.createTempFile("audio_", ".mp3")
@@ -86,6 +91,7 @@ class AudioUtiles(
         btDelete.isEnabled = true
         mediaRecorder?.stop()
         mediaRecorder?.release()
+        audioGrabado=true
         Toast.makeText(contexto,msgDetieneNotaAudio,Toast.LENGTH_SHORT).show()
         btAccion.setImageResource(R.drawable.ic_mic)
     }
@@ -113,6 +119,10 @@ class AudioUtiles(
         } catch (e: IOException) {
             e.printStackTrace()
         }
+    }
+
+    fun getAudioGrabado():Boolean {
+        return audioGrabado
     }
 }
 
